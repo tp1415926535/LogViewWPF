@@ -5,7 +5,16 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:LogView"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800" KeyDown="Root_KeyDown">
+    <!--<UserControl.Resources>
+        <RoutedUICommand x:Key="SearchCommand"/>
+    </UserControl.Resources>
+    <UserControl.CommandBindings>
+        <CommandBinding Command="{StaticResource SearchCommand}" Executed="SearchCommandBinding_Executed"/>
+    </UserControl.CommandBindings>
+    <UserControl.InputBindings>
+        <KeyBinding Key="F" Modifiers="Ctrl" Command="{StaticResource SearchCommand}"/>
+    </UserControl.InputBindings>-->
     <Grid Cursor="">
         <ScrollViewer x:Name="LogViewer" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" ScrollChanged="LogViewer_ScrollChanged">
             <ItemsControl x:Name="logItemsControl">
@@ -113,10 +122,10 @@
                 </Path.Style>
             </Path>
         </ToggleButton>
-        <Grid HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,20,60,0" Visibility="Hidden">
+        <Grid x:Name="SearchGrid" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,20,60,0" Visibility="Hidden">
             <Border Background="White">
                 <Border.Effect>
-                    <DropShadowEffect Direction="0" ShadowDepth="0" BlurRadius="5" Color="Gray"/>
+                    <DropShadowEffect Direction="0" ShadowDepth="0" BlurRadius="6" Color="LightGray"/>
                 </Border.Effect>
             </Border>
             <Border BorderThickness="1" BorderBrush="Gray">
@@ -127,7 +136,7 @@
                     </Grid.ColumnDefinitions>
                     <TextBox Width="200" IsReadOnly="False" VerticalContentAlignment="Center"/>
                     <Button Grid.Column="1" Width="20" Height="20" Background="Transparent" BorderThickness="0">
-                        <Path Data="M 5,0 A 5,5 0,1,0 5,10 A 5,5 0,1,0 5,0 M 8.5,8.5 12,12" Stretch="Uniform" Stroke="#515151" StrokeThickness="2" />
+                        <Path Data="M 5,0 A 5,5 0,1,0 5,10 A 5,5 0,1,0 5,0 M 8.5,8.5 12,12" Stretch="Uniform" Stroke="#515151" Margin="2" StrokeThickness="2" />
                     </Button>
                 </Grid>
             </Border>

@@ -25,9 +25,16 @@ namespace WpfApp.Demo
         public MainWindow()
         {
             InitializeComponent();
+            for (int i = 0; i < 10; i++)
+                AddRandomLog();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            AddRandomLog();
+        }
+
+        private void AddRandomLog()
         {
             var l = random.Next(0, 6);
             StringBuilder stringBuilder = new StringBuilder();
@@ -37,7 +44,6 @@ namespace WpfApp.Demo
                 stringBuilder.Append(Guid.NewGuid());
             logViewControl.AppendLog(stringBuilder.ToString(), (LogLevel)l);
         }
-
 
         private void FilterButton_Click(object sender, RoutedEventArgs e)
         {

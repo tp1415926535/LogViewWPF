@@ -174,5 +174,21 @@ namespace LogView
         {
             LogViewer.ScrollToEnd();
         }
+
+        /// <summary>
+        /// ËÑË÷¿ì½Ý¼ü
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SearchCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            SearchGrid.Visibility = Visibility.Visible;
+        }
+
+        private void Root_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (!(Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.F)) return;
+            SearchGrid.Visibility = Visibility.Visible;
+        }
     }
 }
