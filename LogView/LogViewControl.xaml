@@ -1,0 +1,137 @@
+<UserControl x:Name="Root" x:Class="LogView.LogViewControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:LogView"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid Cursor="">
+        <ScrollViewer x:Name="LogViewer" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" ScrollChanged="LogViewer_ScrollChanged">
+            <ItemsControl x:Name="logItemsControl">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="{Binding Level,StringFormat={}[{0}]}" Opacity="0.8">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+                                        <Setter Property="Width" Value="75"/>
+                                        <Setter Property="Margin" Value="0,0,1,0"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=Root,Path=ShowType}" Value="False">
+                                                <Setter Property="Width" Value="0"/>
+                                                <Setter Property="Margin" Value="0"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Level}" Value="Trace">
+                                                <Setter Property="Foreground" Value="{Binding ElementName=Root,Path=TraceBrush}"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Level}" Value="Debug">
+                                                <Setter Property="Foreground" Value="{Binding ElementName=Root,Path=DebugBrush}"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Level}" Value="Information">
+                                                <Setter Property="Foreground" Value="{Binding ElementName=Root,Path=InformationBrush}"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Level}" Value="Warning">
+                                                <Setter Property="Foreground" Value="{Binding ElementName=Root,Path=WarningBrush}"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Level}" Value="Error">
+                                                <Setter Property="Foreground" Value="{Binding ElementName=Root,Path=ErrorBrush}"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Level}" Value="Critical">
+                                                <Setter Property="Foreground" Value="{Binding ElementName=Root,Path=CriticalBrush}"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                            <TextBox Grid.Column="1" Text="{Binding Text}" IsReadOnly="True" Background="Transparent" BorderThickness="0" TextWrapping="Wrap">
+                                <TextBox.Style>
+                                    <Style TargetType="TextBox">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Level}" Value="Trace">
+                                                <Setter Property="Foreground" Value="{Binding ElementName=Root,Path=TraceBrush}"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Level}" Value="Debug">
+                                                <Setter Property="Foreground" Value="{Binding ElementName=Root,Path=DebugBrush}"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Level}" Value="Information">
+                                                <Setter Property="Foreground" Value="{Binding ElementName=Root,Path=InformationBrush}"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Level}" Value="Warning">
+                                                <Setter Property="Foreground" Value="{Binding ElementName=Root,Path=WarningBrush}"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Level}" Value="Error">
+                                                <Setter Property="Foreground" Value="{Binding ElementName=Root,Path=ErrorBrush}"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Level}" Value="Critical">
+                                                <Setter Property="Foreground" Value="{Binding ElementName=Root,Path=CriticalBrush}"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBox.Style>
+                            </TextBox>
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+        <ToggleButton x:Name="LockToggleButton" Grid.Row="1"
+                      HorizontalAlignment="Right" VerticalAlignment="Top" Margin="15" ToolTip="Lock/Unlock scroller"
+                      Background="Transparent" Height="20" Width="20" BorderThickness="0" Cursor="Hand" Unchecked="LockToggleButton_Unchecked">
+            <ToggleButton.Style>
+                <Style TargetType="{x:Type ToggleButton}">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ToggleButton">
+                                <Border BorderBrush="{TemplateBinding BorderBrush}"  Background="{TemplateBinding Background}">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ToggleButton.Style>
+            <Path Stretch="Fill" Fill="Gray">
+                <Path.Style>
+                    <Style TargetType="Path">
+                        <Setter Property="Data" Value="M768.25422 0q48.810328 0 94.061569 18.303873t80.333664 50.33565 56.436941 74.740814 21.354518 91.519364l0 150.49851-123.042701 0 0-122.025819q0-64.063555-36.099305-99.654419t-97.112214-35.590864q-54.911619 0-88.468719 35.590864t-33.5571 99.654419l0 124.059583-128.12711 0 0-152.532274q0-48.810328 19.320755-91.519364t53.386296-74.740814 80.333664-50.33565 101.179742-18.303873zM766.220457 693.513406l0 87.451837 0 47.793446q0 27.455809-9.660377 51.860973t-26.438928 41.692155-39.658391 27.455809-50.33565 10.168818l-514.542205 0q-27.455809 0-49.82721-9.660377t-38.641509-26.438928-24.913605-39.14995-8.643496-47.793446l0-323.368421q0-28.472691 19.829196-47.793446t46.268123-19.320755l629.449851 0q28.472691 0 47.793446 19.320755t19.320755 47.793446l0 179.988083z"></Setter>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ElementName=LockToggleButton,Path=IsChecked}" Value="True">
+                                <Setter Property="Data" Value="M385.150849 385.662338l-128.895105 0 0-150.377622q0-49.102897 19.436563-91.556444t53.706294-74.677323 80.815185-50.637363 101.786214-18.413586q49.102897 0 94.625375 18.413586t80.815185 50.637363 56.263736 74.677323 20.971029 91.556444l0 150.377622-123.78022 0 0-121.734266q0-64.447552-35.804196-99.74026t-97.182817-35.292707q-55.240759 0-88.999001 35.292707t-33.758242 99.74026l0 121.734266zM826.053946 447.040959q27.62038 0 47.568432 19.948052t19.948052 47.568432l0 317.122877q0 27.62038-9.718282 51.66034t-26.597403 41.942058-39.896104 28.131868-50.637363 10.22977l-516.603397 0q-27.62038 0-50.125874-10.22977t-38.361638-27.108891-24.551449-39.384615-8.695305-48.07992l0-324.283716q0-27.62038 19.436563-47.568432t47.056943-19.948052l61.378621 0 128.895105 0 255.744256 0 123.78022 0 61.378621 0z"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Path.Style>
+            </Path>
+        </ToggleButton>
+        <Grid HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,20,60,0" Visibility="Hidden">
+            <Border Background="White">
+                <Border.Effect>
+                    <DropShadowEffect Direction="0" ShadowDepth="0" BlurRadius="5" Color="Gray"/>
+                </Border.Effect>
+            </Border>
+            <Border BorderThickness="1" BorderBrush="Gray">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox Width="200" IsReadOnly="False" VerticalContentAlignment="Center"/>
+                    <Button Grid.Column="1" Width="20" Height="20" Background="Transparent" BorderThickness="0">
+                        <Path Data="M 5,0 A 5,5 0,1,0 5,10 A 5,5 0,1,0 5,0 M 8.5,8.5 12,12" Stretch="Uniform" Stroke="#515151" StrokeThickness="2" />
+                    </Button>
+                </Grid>
+            </Border>
+
+        </Grid>
+    </Grid>
+</UserControl>

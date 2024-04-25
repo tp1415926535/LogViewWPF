@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34714.143
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogView", "LogView\LogView.csproj", "{3D489866-3E76-40CA-8BDB-E8BB3DA1E4F1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfApp.Demo", "WpfApp.Demo\WpfApp.Demo.csproj", "{33BB1479-886A-4340-AD2B-DE76F0C12342}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3D489866-3E76-40CA-8BDB-E8BB3DA1E4F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D489866-3E76-40CA-8BDB-E8BB3DA1E4F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D489866-3E76-40CA-8BDB-E8BB3DA1E4F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D489866-3E76-40CA-8BDB-E8BB3DA1E4F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33BB1479-886A-4340-AD2B-DE76F0C12342}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33BB1479-886A-4340-AD2B-DE76F0C12342}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33BB1479-886A-4340-AD2B-DE76F0C12342}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33BB1479-886A-4340-AD2B-DE76F0C12342}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B8907EA3-D88D-42CE-96ED-4093E5E50C5C}
+	EndGlobalSection
+EndGlobal
