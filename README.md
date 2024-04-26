@@ -35,7 +35,9 @@ You can have log action associated with it. 你可以让日志的 Action 与之�
         {
             InitializeComponent();
 
-            LogHelper.OnLogAppend+= OnLogAppend;
+            LogHelper.OnLogAppend += OnLogAppend;
+
+            LogHelper.Log("test")
         }
         public void OnLogAppend(string text)
         {
