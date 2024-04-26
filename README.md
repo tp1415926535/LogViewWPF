@@ -25,7 +25,7 @@ You can have log action associated with it. 你可以让日志的 Action 与之�
         public static void Log(string text)
         {
             //write to file
-            OnLogAppend?.Invoke();
+            OnLogAppend?.Invoke(text);
         }
     }
 
