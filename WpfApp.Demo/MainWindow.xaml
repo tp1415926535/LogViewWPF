@@ -14,7 +14,10 @@
         </Grid.RowDefinitions>
         <Grid>
             <StackPanel>
-                <Button Content="Random" Background="WhiteSmoke" Padding="5" Click="Button_Click"/>
+                <UniformGrid Rows="1">
+                    <Button Content="Append Random Log" Background="WhiteSmoke" Padding="5" Click="Button_Click"/>
+                    <Button Content="Clear Log" Background="WhiteSmoke" Padding="5" Click="ClearButton_Click"/>
+                </UniformGrid>
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
@@ -40,6 +43,6 @@
                 </Grid>
             </StackPanel>
         </Grid>
-        <logview:LogViewControl x:Name="logViewControl" Grid.Row="1" ShowType="True" InformationBrush="Blue"/>
+        <logview:LogViewControl x:Name="logViewControl" Grid.Row="1" ShowType="True" EnableSearch="True" SearchCurrentBrush="Yellow"/>
     </Grid>
 </Window>

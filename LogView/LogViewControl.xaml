@@ -16,7 +16,7 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Grid >
+                        <Grid Margin="1">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto"/>
                                 <ColumnDefinition/>
@@ -25,10 +25,10 @@
                                 <Style TargetType="Grid">
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding IsMatching}" Value="True">
-                                            <Setter Property="Background" Value="#FFDDF5FF"/>
+                                            <Setter Property="Background" Value="{Binding ElementName=Root,Path=SearchMatchBrush}"/>
                                         </DataTrigger>
                                         <DataTrigger Binding="{Binding IsCurrent}" Value="True">
-                                            <Setter Property="Background" Value="#FFFFFAE1"/>
+                                            <Setter Property="Background" Value="{Binding ElementName=Root,Path=SearchCurrentBrush}"/>
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
@@ -97,7 +97,7 @@
             </ItemsControl>
         </ScrollViewer>
         <ToggleButton x:Name="LockToggleButton" Grid.Row="1"
-                      HorizontalAlignment="Right" VerticalAlignment="Top" Margin="15" ToolTip="Lock/Unlock scroller"
+                      HorizontalAlignment="Right" VerticalAlignment="Top" Margin="15"
                       Background="Transparent" Height="20" Width="20" BorderThickness="0" Cursor="Hand" Unchecked="LockToggleButton_Unchecked">
             <ToggleButton.Style>
                 <Style TargetType="{x:Type ToggleButton}">
@@ -132,15 +132,19 @@
                 </Border.Effect>
             </Border>
             <Border BorderThickness="1" BorderBrush="Gray">
-                <StackPanel Margin="5">
+                <StackPanel Margin="5,5,0,5">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
                             <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
                         </Grid.ColumnDefinitions>
                         <TextBox x:Name="SearchTextbox" Width="200" IsReadOnly="False" VerticalContentAlignment="Center" KeyDown="SearchTextbox_KeyDown"/>
-                        <Button x:Name="SearchButton" Grid.Column="1" Width="20" Height="20" Background="Transparent" BorderThickness="0" Click="SearchButton_Click">
+                        <Button x:Name="SearchButton" Grid.Column="1" Width="20" Height="20" Background="Transparent" BorderThickness="0" ToolTip="[key]Enter" Click="SearchButton_Click">
                             <Path Data="M 5,0 A 5,5 0,1,0 5,10 A 5,5 0,1,0 5,0 M 8.5,8.5 12,12" Stretch="Uniform" Stroke="#515151" Margin="2" StrokeThickness="2" />
+                        </Button>
+                        <Button x:Name="CloseSearchButton" Grid.Column="2" Width="18" Height="18" Background="Transparent" BorderThickness="0" ToolTip="[key]Esc" Click="CloseSearchButton_Click">
+                            <Path Data="M 0,0 L 1,1 M 1,0 0,1" Stretch="Uniform" Stroke="Gray" Margin="3" StrokeThickness="2" />
                         </Button>
                     </Grid>
                     <Grid Margin="0,2,0,0">
@@ -158,11 +162,10 @@
                             <ColumnDefinition Width="auto"/>
                         </Grid.ColumnDefinitions>
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                            <TextBlock Text="共"/>
-                            <TextBlock x:Name="SearchCountText" Text="0" VerticalAlignment="Center"/>
-                            <TextBlock Text="个，当前第"/>
+                            <TextBlock Text="Result：" FontWeight="Black"/>
                             <TextBlock x:Name="SearchCurrentIndexText" Text="0" VerticalAlignment="Center"/>
-                            <TextBlock Text="个"/>
+                            <TextBlock Text=" / "/>
+                            <TextBlock x:Name="SearchCountText" Text="0" VerticalAlignment="Center"/>
                         </StackPanel>
                         <Button x:Name="UpSearchButton" Grid.Column="1" Content="↑" Click="UpSearchButton_Click"/>
                         <Button x:Name="DownSearchButton" Grid.Column="2" Content="↓" Click="DownSearchButton_Click"/>

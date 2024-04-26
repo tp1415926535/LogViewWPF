@@ -25,7 +25,7 @@ namespace WpfApp.Demo
         public MainWindow()
         {
             InitializeComponent();
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 20; i++)
                 AddRandomLog();
         }
 
@@ -44,6 +44,10 @@ namespace WpfApp.Demo
                 stringBuilder.Append(Guid.NewGuid());
             logViewControl.AppendLog(stringBuilder.ToString(), (LogLevel)l);
         }
+        private void ClearButton_Click(object sender, RoutedEventArgs e)
+        {
+            logViewControl.ClearLog();
+        }
 
         private void FilterButton_Click(object sender, RoutedEventArgs e)
         {
@@ -53,7 +57,6 @@ namespace WpfApp.Demo
         {
             logViewControl.TypeFilter = null;
         }
-
 
         private void ToggleButton_Checked(object sender, RoutedEventArgs e)
         {
@@ -69,5 +72,6 @@ namespace WpfApp.Demo
             if (!Enum.TryParse(toggleButton.Content.ToString(), true, out LogLevel level)) return;
             filterLevels.Remove(level);
         }
+
     }
 }

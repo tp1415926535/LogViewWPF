@@ -70,6 +70,20 @@ namespace LogView
         }
         public static readonly DependencyProperty CriticalBrushProperty = DependencyProperty.Register(nameof(CriticalBrush), typeof(Brush), typeof(LogViewControl), new PropertyMetadata(new SolidColorBrush(Colors.DarkRed)));
 
+        public Brush SearchMatchBrush
+        {
+            get => (Brush)GetValue(SearchMatchBrushProperty);
+            set => SetValue(SearchMatchBrushProperty, value);
+        }
+        public static readonly DependencyProperty SearchMatchBrushProperty = DependencyProperty.Register(nameof(SearchMatchBrush), typeof(Brush), typeof(LogViewControl), new PropertyMetadata(new SolidColorBrush((Color)ColorConverter.ConvertFromString("#DDF5FF"))));
+        public Brush SearchCurrentBrush
+        {
+            get => (Brush)GetValue(SearchCurrentBrushProperty);
+            set => SetValue(SearchCurrentBrushProperty, value);
+        }
+        public static readonly DependencyProperty SearchCurrentBrushProperty = DependencyProperty.Register(nameof(SearchCurrentBrush), typeof(Brush), typeof(LogViewControl), new PropertyMetadata(new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFAE1"))));
+
+
         public int MaxLine
         {
             get { return (int)GetValue(MaxLineProperty); }
@@ -152,12 +166,14 @@ namespace LogView
             collectionView = CollectionViewSource.GetDefaultView(logDatas);
         }
 
+
+        #region 公开方法
         /// <summary>
-        /// 收到日志
+        /// 新增日志
         /// </summary>
         /// <param name="msg"></param>
         /// <param name="level"></param>
-        public void AppendLog(string msg, LogLevel level)
+        public void AppendLog(string msg, LogLevel level = LogLevel.Information)
         {
             Application.Current.Dispatcher.InvokeAsync(new Action(() =>
             {
@@ -170,6 +186,14 @@ namespace LogView
                     logDatas.RemoveAt(0);
             }));
         }
+        /// <summary>
+        /// 清空日志
+        /// </summary>
+        public void ClearLog()
+        {
+            logDatas.Clear();
+        }
+        #endregion
 
         /// <summary>
         /// 滚动到底部
@@ -213,18 +237,29 @@ namespace LogView
             }
 
             if (e.Key == Key.Escape)
-            {
-                SearchGrid.Visibility = Visibility.Hidden;
-                if (SearchLogs != null && SearchLogs.Any())//清除高亮
-                {
-                    foreach (var item in SearchLogs)
-                        item.IsMatching = false;
-                    SearchCountText.Text = "0";
-                    SetSearchCurrent(-1);
-                }
-            }
+                HideSearchGrid();
         }
-
+        /// <summary>
+        /// 关闭搜索框
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CloseSearchButton_Click(object sender, RoutedEventArgs e)
+        {
+            HideSearchGrid();
+        }
+        private void HideSearchGrid()
+        {
+            SearchGrid.Visibility = Visibility.Hidden;
+            if (SearchLogs != null && SearchLogs.Any())//清除高亮
+            {
+                foreach (var item in SearchLogs)
+                    item.IsMatching = false;
+                SearchCountText.Text = "0";
+                SetSearchCurrent(-1);
+            }
+            LogViewer.Focus();
+        }
         /// <summary>
         /// 点击搜索
         /// </summary>
@@ -324,6 +359,7 @@ namespace LogView
         }
         private void PrevResult()
         {
+            if (SearchLogs == null) return;
             if (SearchLogs.Count() <= 0)
             {
                 SetSearchCurrent(-1);
@@ -346,9 +382,9 @@ namespace LogView
         {
             NextResult();
         }
-
         private void NextResult()
         {
+            if (SearchLogs == null) return;
             if (SearchLogs.Count() <= 0)
             {
                 SetSearchCurrent(-1);
@@ -363,5 +399,6 @@ namespace LogView
         }
 
         #endregion
+
     }
 }
