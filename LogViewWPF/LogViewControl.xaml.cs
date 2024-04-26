@@ -128,6 +128,15 @@ namespace LogViewWPF
                 return list.Contains(p.Level);
             };
         }
+
+
+
+        public Thickness Spacing
+        {
+            get => (Thickness)GetValue(SpacingProperty);
+            set => SetValue(SpacingProperty, value);
+        }
+        public static readonly DependencyProperty SpacingProperty = DependencyProperty.Register(nameof(Spacing), typeof(Thickness), typeof(LogViewControl), new PropertyMetadata(new Thickness(1)));
         #endregion
 
 
