@@ -1,23 +1,44 @@
 # LogViewWPF [日志显示页]
 
-For displaying real-time logs. 用于显示实时日志。   
+For displaying real-time logs.    
+用于显示实时日志。   
     
 
 ![screenshot](https://github.com/tp1415926535/LogViewWPF/assets/58326584/b593f591-17e4-4fa0-b1a0-c86e5a295ec6)
 
 
 ## Usage
+### Xaml
 ``` xml
         xmlns:logview="clr-namespace:LogViewWPF;assembly=LogViewWPF"
 
-        <logview:LogViewControl x:Name="logViewControl" Grid.Row="1" ShowType="True"/>
+        <logview:LogViewControl/>
 ```
+You can set line caps and colours for various log types.      
+你可以设置行上限和各种日志类型的颜色。   
+``` xml
+        <logview:LogViewControl x:Name="logViewControl" Grid.Row="1" 
+                        MaxHeight="1000" EnableSearch="True" ShowType="True" 
+                        TraceBrush="LightGray" DebugBrush="Gray" InformationBrush="Black" WarningBrush="DarkOrange"
+                        ErrorBrush="Red" CriticalBrush="DarkRed"  SearchMatchBrush="#DDF5FF" SearchCurrentBrush="#FFFAE1"/>
+```
+### C# 
+Add a line of logging to the display.    
+添加一行日志到显示。   
 ``` c#
         logViewControl.AppendLog("log defualt level is Information");
         logViewControl.AppendLog("append debug", LogLevel.Debug);
         logViewControl.AppendLog("error text", LogLevel.Error);
-```
-You can have log action associated with it. 你可以让日志的 Action 与之关联。
+
+        //logViewControl.ClearLog();
+``` 
+LogLevel enumeration is consistent with [**Microsoft.Extensions.Logging.LogLevel**](https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging.loglevel?view=net-8.0), except that there is no *"LogLevel.None"*.   
+日志等级枚举与 [**Microsoft.Extensions.Logging.LogLevel**](https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging.loglevel?view=net-8.0)一致，除了没有"*LogLevel.None*"。    
+
+    
+      
+You can associate an Action with your own logging service.    
+你可以让你自己日志服务的 Action 与之关联。     
 ``` c#
     public class LogHelper
     {
@@ -44,4 +65,10 @@ You can have log action associated with it. 你可以让日志的 Action 与之�
             logViewControl.AppendLog(text);
         }
     }
+```
+
+Filter Log Type Display.     
+过滤日志类型显示。   
+``` c#
+     logViewControl.TypeFilter = new List<LogLevel>() { LogLevel.Information, LogLevel.Error };
 ```
