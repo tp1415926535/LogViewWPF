@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,8 +11,14 @@ namespace LogView
     /// <summary>
     /// 日志绑定项
     /// </summary>
-    public class LogData
+    internal class LogData : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler? PropertyChanged;
+        public void NotifyPropertyChanged([CallerMemberName] string propertyName = default!)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
         /// <summary>
         /// 日志内容
         /// </summary>
@@ -20,6 +28,37 @@ namespace LogView
         /// 日志等级
         /// </summary>
         public LogLevel Level { get; set; }
+
+        /// <summary>
+        /// 搜索匹配
+        /// </summary>
+        public bool IsMatching
+        {
+            get { return _isMatching; }
+            set
+            {
+                if (_isMatching == value) return;
+                _isMatching = value;
+                NotifyPropertyChanged();
+            }
+        }
+        private bool _isMatching;
+
+
+        /// <summary>
+        /// 搜索显示当前项
+        /// </summary>
+        public bool IsCurrent
+        {
+            get { return _isCurrent; }
+            set
+            {
+                if (_isCurrent == value) return;
+                _isCurrent = value;
+                NotifyPropertyChanged();
+            }
+        }
+        private bool _isCurrent;
     }
 
 

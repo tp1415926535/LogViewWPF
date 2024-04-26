@@ -26,6 +26,12 @@ namespace LogView
             set { SetValue(showTypeProperty, value); }
         }
         public static readonly DependencyProperty showTypeProperty = DependencyProperty.Register(nameof(ShowType), typeof(bool), typeof(LogViewControl), new FrameworkPropertyMetadata(default));
+        public bool EnableSearch
+        {
+            get { return (bool)GetValue(enableSearchProperty); }
+            set { SetValue(enableSearchProperty, value); }
+        }
+        public static readonly DependencyProperty enableSearchProperty = DependencyProperty.Register(nameof(EnableSearch), typeof(bool), typeof(LogViewControl), new FrameworkPropertyMetadata(true));
 
         public Brush TraceBrush
         {
@@ -117,11 +123,26 @@ namespace LogView
         /// <summary>
         /// 绑定的日志
         /// </summary>
-        public ObservableCollection<LogData> logDatas { get; set; } = new ObservableCollection<LogData>();
+        internal ObservableCollection<LogData> logDatas { get; set; } = new ObservableCollection<LogData>();
         /// <summary>
         /// 视图用于筛选
         /// </summary>
         public ICollectionView collectionView { get; set; }
+
+        /// <summary>
+        /// 搜索到匹配的日志
+        /// </summary>
+        IEnumerable<LogData> SearchLogs { get; set; }
+
+        /// <summary>
+        /// 显示搜索结果的索引
+        /// </summary>
+        int searchResultIndex = 0;
+
+        /// <summary>
+        /// 上次回车的值
+        /// </summary>
+        string searchText = string.Empty;
 
         public LogViewControl()
         {
@@ -175,20 +196,172 @@ namespace LogView
             LogViewer.ScrollToEnd();
         }
 
+        #region 搜索功能
         /// <summary>
         /// 搜索快捷键
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void SearchCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
-        {
-            SearchGrid.Visibility = Visibility.Visible;
-        }
-
         private void Root_KeyDown(object sender, KeyEventArgs e)
         {
-            if (!(Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.F)) return;
-            SearchGrid.Visibility = Visibility.Visible;
+            if (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.F)
+            {
+                if (!EnableSearch) return;
+
+                SearchGrid.Visibility = Visibility.Visible;
+                SearchTextbox.Focus();
+            }
+
+            if (e.Key == Key.Escape)
+            {
+                SearchGrid.Visibility = Visibility.Hidden;
+                if (SearchLogs != null && SearchLogs.Any())//清除高亮
+                {
+                    foreach (var item in SearchLogs)
+                        item.IsMatching = false;
+                    SearchCountText.Text = "0";
+                    SetSearchCurrent(-1);
+                }
+            }
         }
+
+        /// <summary>
+        /// 点击搜索
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SearchButton_Click(object sender, RoutedEventArgs e)
+        {
+            Search();
+        }
+        /// <summary>
+        /// 输入框按键事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SearchTextbox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key != Key.Enter) return;
+            Search();
+        }
+        /// <summary>
+        /// 搜索日志
+        /// </summary>
+        private void Search()
+        {
+            string text = SearchTextbox.Text;
+            //文本变化重新搜索
+            if (searchText != text)
+            {
+                searchText = text;
+                if (SearchLogs != null && SearchLogs.Any())//清除高亮
+                {
+                    foreach (var item in SearchLogs)
+                        item.IsMatching = false;
+                }
+                if (string.IsNullOrEmpty(text))
+                {
+                    SearchCountText.Text = "0";
+                    SetSearchCurrent(-1);
+                    return;
+                }
+                //筛选结果
+                SearchLogs = logDatas.Where(x => x.Text.Contains(text));
+                SearchCountText.Text = SearchLogs.Count().ToString();
+                if (SearchLogs.Any())
+                {
+                    foreach (var item in SearchLogs)
+                        item.IsMatching = true;
+                    SetSearchCurrent(0);
+                }
+                else
+                {
+                    SetSearchCurrent(-1);
+                    return;
+                }
+            }
+            else//文本不变显示下一个结果
+            {
+                NextResult();
+            }
+        }
+        /// <summary>
+        /// 设置当前索引
+        /// </summary>
+        /// <param name="index"></param>
+        private void SetSearchCurrent(int index)
+        {
+            if (searchResultIndex >= 0 && searchResultIndex < SearchLogs.Count())
+                SearchLogs.ElementAt(searchResultIndex).IsCurrent = false;
+            searchResultIndex = index;
+            SearchCurrentIndexText.Text = (index + 1).ToString();
+            if (index >= 0 && index < SearchLogs.Count())
+            {
+                var item = SearchLogs.ElementAt(index);
+                item.IsCurrent = true;
+                ScrollToItem(item);
+            }
+        }
+        /// <summary>
+        /// 滚动到对应
+        /// </summary>
+        /// <param name="item"></param>
+        private void ScrollToItem(LogData item)
+        {
+            FrameworkElement framework = logItemsControl.ItemContainerGenerator.ContainerFromItem(item) as FrameworkElement;
+            if (framework == null) return;
+            framework.BringIntoView();
+        }
+
+        /// <summary>
+        /// 查看上一个结果
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UpSearchButton_Click(object sender, RoutedEventArgs e)
+        {
+            PrevResult();
+        }
+        private void PrevResult()
+        {
+            if (SearchLogs.Count() <= 0)
+            {
+                SetSearchCurrent(-1);
+                return;
+            }
+
+            var index = searchResultIndex;
+            if (index <= 0)
+                index = SearchLogs.Count() - 1;
+            else
+                index = searchResultIndex - 1;
+            SetSearchCurrent(index);
+        }
+        /// <summary>
+        /// 查看下一个结果
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DownSearchButton_Click(object sender, RoutedEventArgs e)
+        {
+            NextResult();
+        }
+
+        private void NextResult()
+        {
+            if (SearchLogs.Count() <= 0)
+            {
+                SetSearchCurrent(-1);
+                return;
+            }
+            var index = searchResultIndex;
+            if (index >= SearchLogs.Count() - 1)
+                index = 0;
+            else
+                index = searchResultIndex + 1;
+            SetSearchCurrent(index);
+        }
+
+        #endregion
     }
 }
