@@ -22,6 +22,10 @@ You can set line caps and colours for various log types.
                         TraceBrush="LightGray" DebugBrush="Gray" InformationBrush="Black" WarningBrush="DarkOrange"
                         ErrorBrush="Red" CriticalBrush="DarkRed"  SearchMatchBrush="#DDF5FF" SearchCurrentBrush="#FFFAE1"/>
 ```
+If `EnableSearch = "True"`, Ctrl+F shows the search bar, Esc hides it.    
+如果`EnableSearch = "True"`，Ctrl+F 显示搜索栏，Esc 隐藏搜索栏
+
+
 ### C# 
 Add a line of logging to the display.    
 添加一行日志到显示。   
