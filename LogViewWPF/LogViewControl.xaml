@@ -1,9 +1,9 @@
-﻿<UserControl x:Name="Root" x:Class="LogView.LogViewControl"
+﻿<UserControl x:Name="Root" x:Class="LogViewWPF.LogViewControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:LogView"
+             xmlns:local="clr-namespace:LogViewWPF"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" KeyDown="Root_KeyDown">
     <Grid>

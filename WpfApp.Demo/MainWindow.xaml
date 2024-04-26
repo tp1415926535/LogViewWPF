@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp.Demo"
-        xmlns:logview="clr-namespace:LogView;assembly=LogView"
+        xmlns:logview="clr-namespace:LogViewWPF;assembly=LogViewWPF"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800" WindowStartupLocation="CenterScreen">
     <Grid>
@@ -43,6 +43,6 @@
                 </Grid>
             </StackPanel>
         </Grid>
-        <logview:LogViewControl x:Name="logViewControl" Grid.Row="1" ShowType="True" EnableSearch="True" SearchCurrentBrush="Yellow"/>
+        <logview:LogViewControl x:Name="logViewControl" Grid.Row="1" ShowType="False" EnableSearch="True" SearchCurrentBrush="Yellow"/>
     </Grid>
 </Window>
