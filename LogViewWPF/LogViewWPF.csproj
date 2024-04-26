@@ -1,10 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0-windows</TargetFramework>
-    <Nullable>enable</Nullable>
-    <UseWPF>true</UseWPF>
-    <ImplicitUsings>enable</ImplicitUsings>
-  </PropertyGroup>
+	<PropertyGroup>
+		<!--<TargetFramework>net6.0-windows</TargetFramework>-->
+		<TargetFrameworks>net6.0-windows;netcoreapp3.1;net462</TargetFrameworks>
+		<!--<Nullable>enable</Nullable>-->
+		<UseWPF>true</UseWPF>
+		<!--<ImplicitUsings>enable</ImplicitUsings>-->
+	</PropertyGroup>
 
 </Project>
