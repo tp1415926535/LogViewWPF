@@ -43,6 +43,6 @@
                 </Grid>
             </StackPanel>
         </Grid>
-        <logview:LogViewControl x:Name="logViewControl" Grid.Row="1" ShowType="False" EnableSearch="True" SearchCurrentBrush="Yellow"/>
+        <logview:LogViewControl x:Name="logViewControl" Grid.Row="1" ShowType="True" EnableSearch="True" SearchCurrentBrush="LightYellow"/>
     </Grid>
 </Window>
