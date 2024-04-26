@@ -18,7 +18,7 @@ You can set line caps and colours for various log types.
 你可以设置行上限和各种日志类型的颜色。   
 ``` xml
         <logview:LogViewControl x:Name="logViewControl" Grid.Row="1" 
-                        MaxHeight="1000" EnableSearch="True" ShowType="True" 
+                        MaxHeight="1000" EnableSearch="True" ShowType="True"  Spacing="10,5"
                         TraceBrush="LightGray" DebugBrush="Gray" InformationBrush="Black" WarningBrush="DarkOrange"
                         ErrorBrush="Red" CriticalBrush="DarkRed"  SearchMatchBrush="#DDF5FF" SearchCurrentBrush="#FFFAE1"/>
 ```
