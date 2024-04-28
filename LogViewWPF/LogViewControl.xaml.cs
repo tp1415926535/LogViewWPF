@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
 
 namespace LogViewWPF
@@ -175,7 +177,7 @@ namespace LogViewWPF
 
         #region 公开方法
         /// <summary>
-        /// 新增日志
+        /// 新增单条日志
         /// </summary>
         /// <param name="msg"></param>
         /// <param name="level"></param>
@@ -192,6 +194,41 @@ namespace LogViewWPF
                     logDatas.RemoveAt(0);
             }));
         }
+
+        /// <summary>
+        /// 批量新增多行日志
+        /// </summary>
+        /// <param name="msg"></param>
+        /// <param name="level"></param>
+        public void AppendMultiLog(IEnumerable<string> lines, LogLevel level)
+        {
+            Application.Current.Dispatcher.InvokeAsync(new Action(() =>
+            {
+                if (lines.Count() > MaxLine)
+                {
+                    logDatas.Clear();
+                    lines = lines.Skip(lines.Count() - MaxLine);
+                }
+                else
+                {
+                    var targetAmount = lines.Count() + logDatas.Count;
+                    if (targetAmount > MaxLine)
+                    {
+                        for (int i = 0; i < targetAmount - MaxLine; i++)
+                            logDatas.RemoveAt(0);
+                    }
+                }
+                foreach (var line in lines)
+                {
+                    var log = new LogData { Text = line, Level = level };
+                    logDatas.Add(log);
+                }
+                if (LockToggleButton.IsChecked != true)
+                    LogViewer.ScrollToEnd();
+            }));
+        }
+
+
         /// <summary>
         /// 清空日志
         /// </summary>
