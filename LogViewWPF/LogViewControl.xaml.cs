@@ -235,7 +235,10 @@ namespace LogViewWPF
         /// </summary>
         public void ClearLog()
         {
-            logDatas.Clear();
+            Application.Current.Dispatcher.InvokeAsync(new Action(() =>
+            {
+                logDatas.Clear();
+            }));
         }
         #endregion
 
