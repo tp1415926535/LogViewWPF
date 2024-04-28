@@ -291,8 +291,9 @@ namespace LogViewWPF
         private void Search()
         {
             string text = SearchTextbox.Text;
-            //文本变化重新搜索
-            if (searchText != text)
+            if (searchText == text && SearchLogs.Any() && logDatas.Contains(SearchLogs[0]))//文本不变显示下一个结果，且结果没有变少，显示下一个
+                NextResult();
+            else//重新搜索
             {
                 searchText = text;
                 if (SearchLogs != null && SearchLogs.Any())//清除高亮
@@ -324,10 +325,6 @@ namespace LogViewWPF
                     SetSearchCurrent(-1);
                     return;
                 }
-            }
-            else//文本不变显示下一个结果
-            {
-                NextResult();
             }
         }
         /// <summary>
