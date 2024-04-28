@@ -1,5 +1,9 @@
 # LogViewWPF [日志显示页]
 
+[![release](https://img.shields.io/github/v/release/tp1415926535/LogViewWPF?color=green&logo=github)](https://github.com/tp1415926535/LogViewWPF/releases) 
+[![nuget](https://img.shields.io/nuget/v/LogViewWPF?color=lightblue&logo=nuget)](https://www.nuget.org/packages/LogViewWPF)     
+![language](https://img.shields.io/github/languages/top/tp1415926535/LogViewWPF)
+
 Can be used to display live logs, comes with a simple search function.    
 可以用于显示实时日志，附带简单的搜索功能。   
     
