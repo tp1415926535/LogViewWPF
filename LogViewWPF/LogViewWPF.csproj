@@ -5,7 +5,17 @@
 		<TargetFrameworks>net6.0-windows;netcoreapp3.1;net462</TargetFrameworks>
 		<!--<Nullable>enable</Nullable>-->
 		<UseWPF>true</UseWPF>
+		<Authors>tp1415926535</Authors>
+		<PackageProjectUrl>https://github.com/tp1415926535/LogViewWPF</PackageProjectUrl>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<!--<ImplicitUsings>enable</ImplicitUsings>-->
 	</PropertyGroup>
+
+	<ItemGroup>
+	  <None Include="..\README.md">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
+	</ItemGroup>
 
 </Project>
