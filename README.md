@@ -32,9 +32,9 @@ If `EnableSearch = "True"`, Ctrl+F shows the search bar, Esc hides it.
 
 ### C# 
 
-#### * Basic 基本
-Add a line of logging to the display.    
-添加一行日志到显示。   
+#### * **Basic 基本**
+Add logging to the display.    
+添加日志到显示。   
 ``` c#
 logViewControl.AppendLog("log defualt level is Information");
 
@@ -51,7 +51,7 @@ logViewControl.AppendMultiLog(lines);
 LogLevel enumeration is consistent with [**Microsoft.Extensions.Logging.LogLevel**](https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging.loglevel?view=net-8.0), except that there is no *"LogLevel.None"*.   
 日志等级枚举与 [**Microsoft.Extensions.Logging.LogLevel**](https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging.loglevel?view=net-8.0)一致，除了没有"*LogLevel.None*"。    
      
-#### * Subscription 订阅
+#### * **Subscription 订阅**
 You can associate an Action with your own logging service.    
 你可以让你自己日志服务的 Action 与之关联。     
 ``` c#
@@ -82,7 +82,7 @@ public partial class MainWindow : Window
 }
 ```
      
-#### * Filter 过滤类型
+#### * **Filter 过滤类型**
 Filter Log Type Display.     
 过滤日志类型显示。   
 ``` c#
