@@ -200,7 +200,7 @@ namespace LogViewWPF
         /// </summary>
         /// <param name="msg"></param>
         /// <param name="level"></param>
-        public void AppendMultiLog(IEnumerable<string> lines, LogLevel level)
+        public void AppendMultiLog(IEnumerable<string> lines, LogLevel level = LogLevel.Information)
         {
             Application.Current.Dispatcher.InvokeAsync(new Action(() =>
             {
