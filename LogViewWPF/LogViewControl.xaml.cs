@@ -152,7 +152,7 @@ namespace LogViewWPF
         /// <summary>
         /// 搜索到匹配的日志
         /// </summary>
-        IEnumerable<LogData> SearchLogs { get; set; }
+        List<LogData> SearchLogs { get; set; } = new List<LogData>();
 
         /// <summary>
         /// 显示搜索结果的索引
@@ -298,7 +298,10 @@ namespace LogViewWPF
                 if (SearchLogs != null && SearchLogs.Any())//清除高亮
                 {
                     foreach (var item in SearchLogs)
+                    {
+                        item.IsCurrent = false;
                         item.IsMatching = false;
+                    }
                 }
                 if (string.IsNullOrEmpty(text))
                 {
@@ -307,7 +310,8 @@ namespace LogViewWPF
                     return;
                 }
                 //筛选结果
-                SearchLogs = logDatas.Where(x => x.Text.Contains(text));
+                SearchLogs.Clear();
+                SearchLogs = logDatas.Where(x => x.Text.Contains(text)).ToList();
                 SearchCountText.Text = SearchLogs.Count().ToString();
                 if (SearchLogs.Any())
                 {
@@ -339,6 +343,7 @@ namespace LogViewWPF
             if (index >= 0 && index < SearchLogs.Count())
             {
                 var item = SearchLogs.ElementAt(index);
+                if (!logDatas.Contains(item)) return;//已被挤出上限
                 item.IsCurrent = true;
                 ScrollToItem(item);
             }
