@@ -26,28 +26,38 @@ namespace WpfApp.Demo
         {
             InitializeComponent();
             for (int i = 0; i < 20; i++)
-                AddRandomLog();
+               logViewControl.AppendLog(GenerateRandomLog(), (LogLevel)(random.Next(0, 6)));
         }
+
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            AddRandomLog();
+            logViewControl.AppendLog(GenerateRandomLog(), (LogLevel)(random.Next(0, 6)));
         }
 
-        private void AddRandomLog()
+        private void MultiButton_Click(object sender, RoutedEventArgs e)
         {
-            var l = random.Next(0, 6);
+            List<(string,LogLevel)> lines = new List<(string, LogLevel)>();
+            for (int i = 0; i < 5; i++)
+                lines.Add((GenerateRandomLog(), (LogLevel)(random.Next(0, 6))));
+            logViewControl.AppendMultiLog(lines);
+        }
+
+        private string GenerateRandomLog()
+        {
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.Append(DateTime.Now.ToLongTimeString());
             stringBuilder.Append(" ");
             for (int i = 0; i < 5; i++)
                 stringBuilder.Append(Guid.NewGuid());
-            logViewControl.AppendLog(stringBuilder.ToString(), (LogLevel)l);
+            return stringBuilder.ToString();
         }
         private void ClearButton_Click(object sender, RoutedEventArgs e)
         {
             logViewControl.ClearLog();
         }
+
+
 
         private void FilterButton_Click(object sender, RoutedEventArgs e)
         {
@@ -61,7 +71,7 @@ namespace WpfApp.Demo
         private void ToggleButton_Checked(object sender, RoutedEventArgs e)
         {
             ToggleButton toggleButton = sender as ToggleButton;
-            if (!Enum.TryParse(toggleButton.Content.ToString(), true, out LogLevel level))return;
+            if (!Enum.TryParse(toggleButton.Content.ToString(), true, out LogLevel level)) return;
             if (filterLevels.Contains(level)) return;
             filterLevels.Add(level);
         }

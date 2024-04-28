@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -10,6 +11,7 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
+using System.Windows.Shapes;
 
 namespace LogViewWPF
 {
@@ -200,7 +202,7 @@ namespace LogViewWPF
         /// </summary>
         /// <param name="msg"></param>
         /// <param name="level"></param>
-        public void AppendMultiLog(IEnumerable<string> lines, LogLevel level = LogLevel.Information)
+        public void AppendMultiLog(IEnumerable<(string, LogLevel)> lines)
         {
             Application.Current.Dispatcher.InvokeAsync(new Action(() =>
             {
@@ -220,14 +222,13 @@ namespace LogViewWPF
                 }
                 foreach (var line in lines)
                 {
-                    var log = new LogData { Text = line, Level = level };
+                    var log = new LogData { Text = line.Item1, Level = line.Item2 };
                     logDatas.Add(log);
                 }
                 if (LockToggleButton.IsChecked != true)
                     LogViewer.ScrollToEnd();
             }));
         }
-
 
         /// <summary>
         /// «Âø’»’÷æ

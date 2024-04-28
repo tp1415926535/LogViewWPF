@@ -16,6 +16,7 @@
             <StackPanel>
                 <UniformGrid Rows="1">
                     <Button Content="Append Random Log" Background="WhiteSmoke" Padding="5" Click="Button_Click"/>
+                    <Button Content="Append Multi Random Log" Background="WhiteSmoke" Padding="5" Click="MultiButton_Click"/>
                     <Button Content="Clear Log" Background="WhiteSmoke" Padding="5" Click="ClearButton_Click"/>
                 </UniformGrid>
                 <Grid>
