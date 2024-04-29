@@ -304,6 +304,7 @@ namespace LogViewWPF
                     item.IsMatching = false;
                 SearchCountText.Text = "0";
                 SetSearchCurrent(-1);
+                SearchLogs.Clear();
             }
             LogViewer.Focus();
         }
