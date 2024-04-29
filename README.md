@@ -7,6 +7,8 @@
 Can be used to display live logs, comes with a simple search function.    
 可以用于显示实时日志，附带简单的搜索功能。   
     
+*< Note: ReadMe.md in nuget has a MaxLine error written as MaxHeight.>    
+<注：Nuget里的ReadMe.md有个MaxLine错误的写成了MaxHeight。>*
 
 ![screenshot](https://github.com/tp1415926535/LogViewWPF/assets/58326584/b593f591-17e4-4fa0-b1a0-c86e5a295ec6)
 
