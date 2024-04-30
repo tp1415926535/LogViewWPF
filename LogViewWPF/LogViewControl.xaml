@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" KeyDown="Root_KeyDown">
     <Grid>
-        <ScrollViewer x:Name="LogViewer" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" ScrollChanged="LogViewer_ScrollChanged">
+        <ScrollViewer x:Name="LogViewer" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" ScrollChanged="LogViewer_ScrollChanged" >
             <ItemsControl x:Name="logItemsControl">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -96,7 +96,7 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </ScrollViewer>
-        <ToggleButton x:Name="LockToggleButton" Grid.Row="1"
+        <ToggleButton x:Name="LockToggleButton" Grid.Row="1" Visibility="{Binding ElementName=LogViewer,Path=ComputedVerticalScrollBarVisibility}"
                       HorizontalAlignment="Right" VerticalAlignment="Top" Margin="15"
                       Background="Transparent" Height="20" Width="20" BorderThickness="0" Cursor="Hand" Unchecked="LockToggleButton_Unchecked">
             <ToggleButton.Style>
